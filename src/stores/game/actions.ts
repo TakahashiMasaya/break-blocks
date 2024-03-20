@@ -66,8 +66,12 @@ export const moveBall = () => {
   state.value.ball.y += getBallSpeed().y
 }
 
+/**
+ * スピードを上げる
+ *
+ */
 const increaseBallSpeed = () => {
-  state.value.ball.speed += state.value.ball.speed >= 12 ? 0 : 1
+  state.value.ball.speed += state.value.ball.speed >= 11 ? 0 : 1
 }
 
 /**
