@@ -1,5 +1,10 @@
 <template>
-  <div class="frame">
+  <div
+    class="frame"
+    :style="{
+      transform: `scale(${scale})`
+    }"
+  >
     <div
       :class="{
         area: true,
@@ -48,7 +53,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import { useGame } from '@/stores/game'
 import { useInteractor } from '@/stores/interactor'
 import Bause from '@/components/bause.vue'
@@ -57,6 +63,7 @@ import Ball from '@/components/ball.vue'
 
 import { init, add, start, stop, end, isPaused } from '@/composables/activeAnimator'
 import { initController, removeController } from '@/composables/controllers'
+import { actPad } from '@/composables/controllers/gamepad'
 
 const store = useGame()
 const storeInteractor = useInteractor()
@@ -72,11 +79,28 @@ const isGameover = computed(() => store.isGameover)
 const isGameclear = computed(() => store.isGameclear)
 const isPlaying = computed(() => store.isPlaying)
 
+const scale = ref<number>(1)
+
 const restart = () => {
   store.resetAll()
   store.toReady()
   start()
 }
+
+useEventListener(window, 'resize', (event) => {
+  const app = document.querySelector('#app') as HTMLElement
+  if (!app) {
+    return
+  }
+  // TODO: リサイズはのちにリファクタリングする
+  const width = app.clientWidth
+  const height = app.clientHeight
+  if (width > height) {
+    scale.value = 400 / height
+  } else {
+    scale.value = width / 800
+  }
+})
 
 onMounted(() => {
   init()
@@ -121,6 +145,9 @@ onMounted(() => {
         break
     }
   })
+  add('gamepad', () => {
+    actPad()
+  })
 })
 
 onUnmounted(() => {
@@ -132,6 +159,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .frame {
   display: flex;
+  transform-origin: top center;
 }
 .area {
   position: relative;

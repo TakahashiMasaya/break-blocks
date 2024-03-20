@@ -59,8 +59,12 @@
   padding: 0;
 }
 
+html {
+  overflow: hidden;
+}
 body {
-  min-height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   color: var(--color-text);
   background: var(--color-background);
   transition:
@@ -84,4 +88,5 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }

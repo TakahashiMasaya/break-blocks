@@ -2,23 +2,23 @@ const command: {
   leftOff: () => void
   leftOn: () => void
   rightOff: () => void
-  righOn: () => void
+  rightOn: () => void
   spaceOn: () => void
   spaceOff: () => void
 } = {
   leftOff: () => {},
   leftOn: () => {},
   rightOff: () => {},
-  righOn: () => {},
+  rightOn: () => {},
   spaceOn: () => {},
   spaceOff: () => {}
 }
 
-export const init = ({ leftOff, leftOn, rightOff, righOn, spaceOn, spaceOff }: typeof command) => {
+export const init = ({ leftOff, leftOn, rightOff, rightOn, spaceOn, spaceOff }: typeof command) => {
   command.leftOff = leftOff
   command.leftOn = leftOn
   command.rightOff = rightOff
-  command.righOn = righOn
+  command.rightOn = rightOn
   command.spaceOn = spaceOn
   command.spaceOff = spaceOff
 }
@@ -54,7 +54,7 @@ const onKeyDown = (e: KeyboardEvent) => {
       command.leftOn()
       break
     case 'ArrowRight':
-      command.righOn()
+      command.rightOn()
       break
     case ' ':
       command.spaceOn()
