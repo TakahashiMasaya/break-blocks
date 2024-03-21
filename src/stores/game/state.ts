@@ -32,7 +32,7 @@ export type State = {
   score: number
 }
 
-export const initialSpaceWalls = [...new Array(64)].map((_, i) => {
+export const initialSpaceWalls = [...new Array(48)].map((_, i) => {
   const cols = i % 8
   const rows = Math.floor(i / 8)
   return { show: true, type: 0, x: 100 + cols * 50, y: 50 + rows * 20, width: 50, height: 20 }
