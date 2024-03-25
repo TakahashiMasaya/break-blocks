@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { Vec2 } from '@/libs/vec2'
 
 export type State = {
   status: 'ready' | 'playing' | 'gameover' | 'gameclear'
@@ -11,23 +12,21 @@ export type State = {
     type: number
     width: number
     height: number
-    x: number
-    y: number
+    position: Vec2
   }[]
   ball: {
-    x: number
-    y: number
     width: number
     height: number
-    speed: number
-    radian: number
+    position: Vec2
+    speed: Vec2
+    radius: number
   }
   bause: {
-    x: number
-    y: number
     width: number
     height: number
-    speed: number
+    position: Vec2
+    speed: Vec2
+    radius: number
   }
   score: number
 }
@@ -35,17 +34,40 @@ export type State = {
 export const initialSpaceWalls = [...new Array(48)].map((_, i) => {
   const cols = i % 8
   const rows = Math.floor(i / 8)
-  return { show: true, type: 0, x: 100 + cols * 50, y: 50 + rows * 20, width: 50, height: 20 }
+  return {
+    show: true,
+    type: 0,
+    position: new Vec2(60 + cols * 60, 50 + rows * 20),
+    width: 60,
+    height: 20
+  }
 })
 
-export const state = ref<State>({
+export const initialState: State = {
   status: 'ready',
   frame: {
     width: 600,
     height: 600
   },
   spaceWalls: JSON.parse(JSON.stringify(initialSpaceWalls)),
-  ball: { x: 290, y: 480, width: 20, height: 20, speed: 8, radian: 0 },
-  bause: { x: 250, y: 500, width: 100, height: 20, speed: 10 },
+  ball: { position: new Vec2(290, 480), speed: new Vec2(5, 5), width: 20, height: 20, radius: 10 },
+  bause: {
+    position: new Vec2(250, 550),
+    speed: new Vec2(10, 0),
+    width: 100,
+    height: 20,
+    radius: 10
+  },
   score: 0
+}
+
+export const state = ref<State>({
+  // TODO: positionの初期設定確認する
+  // 正しく初期設定されるか確認する
+  // JSON.parse(JSON.stringifyではnew Vec2()が潰れる
+  ...initialState,
+  spaceWalls: initialState.spaceWalls.map((o) => ({
+    ...o,
+    position: new Vec2(o.position.x, o.position.y)
+  }))
 })

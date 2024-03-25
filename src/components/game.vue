@@ -117,15 +117,13 @@ onMounted(() => {
       case 'ready':
         if (storeInteractor.isSpaceOn) {
           store.toPlaying()
-          store.setBallRadian((Math.PI / 4) * (Math.random() > 0.5 ? -1 : -3))
+          store.setBallSpeed({ x: 5 * (Math.random() > 0.5 ? 1 : -1), y: 5 })
           break
         }
-        if (storeInteractor.isLeftOn || storeInteractor.isRightOn) {
-          // ボールも追随させる
-          const { x, width } = bause.value
-          const { y: ballY, width: ballWidth } = ball.value
-          store.setBallPosition({ x: x + width / 2 - ballWidth / 2, y: ballY })
-        }
+        // ボールも追随させる
+        const { x, y, width } = bause.value
+        const { width: ballWidth, height: ballHeight } = ball.value
+        store.setBallPosition({ x: x + width / 2 - ballWidth / 2, y: y - ballHeight })
         break
       case 'playing':
         if (store.isBallDropped()) {
