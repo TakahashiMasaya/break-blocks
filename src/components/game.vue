@@ -87,7 +87,7 @@ const restart = () => {
   start()
 }
 
-useEventListener(window, 'resize', (event) => {
+useEventListener(window, 'resize', () => {
   const app = document.querySelector('#app') as HTMLElement
   if (!app) {
     return

@@ -49,6 +49,9 @@ devDependencies:
   '@vue/tsconfig':
     specifier: ^0.5.1
     version: 0.5.1
+  babylonjs:
+    specifier: ^6.48.1
+    version: 6.48.1
   biome:
     specifier: ^0.3.3
     version: 0.3.3
@@ -1086,6 +1089,11 @@ packages:
 
   /aws4@1.12.0:
     resolution: {integrity: sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==}
+    dev: true
+
+  /babylonjs@6.48.1:
+    resolution: {integrity: sha512-xSc6pdSPkhVheg6xvsHGuurqZojxvAFbMGhcSjC/K1Bjb/7fpB1ahg8tnTwICfhdw8APYXJrYctXXjfsk88Ahg==}
+    requiresBuild: true
     dev: true
 
   /balanced-match@1.0.2:

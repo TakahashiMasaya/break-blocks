@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import Game from './components/game.vue'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <game />
+  <header>
+    <div class="wrapper">
+      <nav>
+        <RouterLink to="/">index</RouterLink>
+        <RouterLink to="/babylon">Babylon</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
 <style scoped lang="scss"></style>

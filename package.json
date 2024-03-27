@@ -30,6 +30,7 @@
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/test-utils": "^2.4.5",
     "@vue/tsconfig": "^0.5.1",
+    "babylonjs": "^6.48.1",
     "biome": "^0.3.3",
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.2",
