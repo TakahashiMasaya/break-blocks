@@ -8,7 +8,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@vueuse/sound": ["./node_modules/@vueuse/sound/dist/index.d.ts"]
     }
   }
 }
