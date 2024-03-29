@@ -1,9 +1,24 @@
 <script setup lang="ts">
-import Game from './components/game.vue'
+import { ref } from 'vue'
+import Game from '@/components/game.vue'
+import GameTitle from '@/components/gameTitle.vue'
+import { useEventListener } from '@vueuse/core'
+
+const ready = ref(true)
+
+useEventListener(window, 'click', (e) => {
+  new AudioContext()
+  ready.value = false
+})
 </script>
 
 <template>
-  <game />
+  <div v-if="ready">
+    <GameTitle />
+  </div>
+  <div v-else>
+    <Game />
+  </div>
 </template>
 
 <style scoped lang="scss"></style>

@@ -89,6 +89,8 @@ const adoptiveBallSpeed = () => {
  *
  */
 export const bouncingBall = () => {
+  state.value.collided = null
+
   const { position, width, speed } = state.value.ball
   const { x, y } = position.add(speed)
 
@@ -96,12 +98,14 @@ export const bouncingBall = () => {
   if (x < 0 || x + width > state.value.frame.width) {
     const { x: speedX, y: speedY } = state.value.ball.speed
     state.value.ball.speed.setVec(speedX * -1, speedY)
+    state.value.collided = 'wall'
   }
 
   // 壁に当たったら跳ね返る(天井)
   if (y < 0) {
     const { x: speedX, y: speedY } = state.value.ball.speed
     state.value.ball.speed.setVec(speedX, speedY * -1)
+    state.value.collided = 'wall'
   }
 
   // スペースウォールとボールの衝突判定
@@ -126,27 +130,24 @@ export const bouncingBall = () => {
     collidedSpaceWall.show = false
     addScore(100)
     increaseBallSpeed()
+    state.value.collided = 'spaceWall'
   }
 
   // バウスに当たったら跳ね返る
-  // NOTE: バウスを5つ円を並べるイメージで衝突判定する
+  // NOTE: バウスを10こ円を並べるイメージで衝突判定する
   const { x: bauseX, y: bauseY } = state.value.bause.position.getVec()
   const collidedBauseIndex = [...new Array(10)].findIndex((_, i) => {
     const vecPosition = new Vec2(bauseX + i * 10, bauseY)
     const distance = vecPosition.sub(position.add(speed)).mag()
-    // 衝突したら
-    if (distance < state.value.ball.radius + state.value.bause.radius) {
-      const w = state.value.ball.position.sub(vecPosition)
-      const r = state.value.ball.speed.reflect(w)
-      state.value.ball.speed = r
-      return
-    }
+    return distance < state.value.ball.radius + state.value.bause.radius
   })
+  // 衝突したら
   if (collidedBauseIndex >= 0) {
     const vecPosition = new Vec2(bauseX + collidedBauseIndex * 10, bauseY)
     const w = state.value.ball.position.sub(vecPosition)
     const r = state.value.ball.speed.reflect(w)
     state.value.ball.speed = r
+    state.value.collided = 'bause'
   }
 }
 

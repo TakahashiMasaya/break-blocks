@@ -45,3 +45,5 @@ export const getBause = computed(() => {
 })
 
 export const getScore = computed(() => state.value.score)
+
+export const collided = computed(() => state.value.collided)

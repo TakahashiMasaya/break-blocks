@@ -29,6 +29,7 @@ export type State = {
     radius: number
   }
   score: number
+  collided: 'wall' | 'bause' | 'spaceWall' | null
 }
 
 export const initialSpaceWalls = [...new Array(48)].map((_, i) => {
@@ -58,7 +59,8 @@ export const initialState: State = {
     height: 20,
     radius: 10
   },
-  score: 0
+  score: 0,
+  collided: null
 }
 
 export const state = ref<State>({

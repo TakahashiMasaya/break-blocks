@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="divFrame"
     class="frame"
     :style="{
       transform: `scale(${scale})`
@@ -36,15 +37,20 @@
         }"
       />
       <bause
-        :style="{
-          width: `${bause.width}px`,
-          height: `${bause.height}px`,
-          transform: `translate(${store.getBause.x}px, ${store.getBause.y}px)`
-        }"
+        :x="store.getBause.x"
+        :y="store.getBause.y"
+        :width="bause.width"
+        :height="bause.height"
+        :is-explode="isGameover"
       />
     </div>
-    <div class="information">
-      <p class="score">score: {{ score }}</p>
+    <div
+      class="information"
+      :style="{
+        height: `${frame.height}px`
+      }"
+    >
+      <p class="score">SCORE<br />{{ score }}</p>
       <button v-if="isPlaying && isPaused()" @click.stop="start">start</button>
       <button v-if="isPlaying && !isPaused()" @click.stop="stop">pause</button>
       <button v-if="isGameover || isGameclear" @click.stop="restart">re-start</button>
@@ -64,9 +70,12 @@ import Ball from '@/components/ball.vue'
 import { init, add, start, stop, end, isPaused } from '@/composables/activeAnimator'
 import { initController, removeController } from '@/composables/controllers'
 import { actPad } from '@/composables/controllers/gamepad'
+import { useSound } from '@vueuse/sound'
 
 const store = useGame()
 const storeInteractor = useInteractor()
+
+const divFrame = ref<HTMLDivElement>()
 
 const frame = computed(() => store.getFrame)
 const spacewalls = computed(() => store.getSpaceWalls)
@@ -87,19 +96,39 @@ const restart = () => {
   start()
 }
 
-useEventListener(window, 'resize', (event) => {
-  const app = document.querySelector('#app') as HTMLElement
-  if (!app) {
+const resize = () => {
+  if (!divFrame.value) {
     return
   }
-  // TODO: リサイズはのちにリファクタリングする
-  const width = app.clientWidth
-  const height = app.clientHeight
+  const width = window.innerWidth - 40
+  const height = window.innerHeight - 40
+  const { width: w, height: h } = divFrame.value.getBoundingClientRect()
+  // NOTE: 画面サイズから割り出し、縦横比を維持したまま、短辺に合わせる
   if (width > height) {
-    scale.value = 400 / height
+    console.log('width >')
+    if (width / height > w / h) {
+      console.log('width > :', width / height, w / h)
+      scale.value = height / 600
+    } else {
+      console.log('height > :', width / height, w / h)
+      scale.value = width / 850
+    }
   } else {
-    scale.value = width / 800
+    console.log('height >')
+    scale.value = width / 850
   }
+}
+
+useEventListener(window, 'resize', resize)
+
+const { play: playCollision } = useSound('./sound/collision.mp3', {
+  volume: 0.1
+})
+const { play: playCollidedWall } = useSound('./sound/collidedWall.mp3', {
+  volume: 0.1
+})
+const { play: playCollidedBouse } = useSound('./sound/collidedBouse.mp3', {
+  volume: 0.1
 })
 
 onMounted(() => {
@@ -136,8 +165,16 @@ onMounted(() => {
         }
         store.moveBall()
         store.bouncingBall()
+        if (store.collided === 'spaceWall' || store.collided === 'wall') {
+          playCollidedWall()
+        } else if (store.collided === 'bause') {
+          playCollidedBouse()
+        }
         break
       case 'gameover':
+        playCollision()
+        stop()
+        break
       case 'gameclear':
         stop()
         break
@@ -146,6 +183,7 @@ onMounted(() => {
   add('gamepad', () => {
     actPad()
   })
+  resize()
 })
 
 onUnmounted(() => {
@@ -157,14 +195,11 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .frame {
   display: flex;
-  transform-origin: top center;
 }
 .area {
   position: relative;
   background-color: #000;
-  border: 10px solid #fff;
-  border-bottom: none;
-  box-sizing: content-box;
+  box-shadow: 0px -5px 0px 5px #ffffff;
   &.paused::before {
     content: '';
     z-index: 2;
@@ -201,8 +236,9 @@ onUnmounted(() => {
 }
 
 .information {
-  width: 200px;
-  margin: 0px 10px;
+  width: 250px;
+  padding: 0px 10px;
+  flex: 0 0 250px;
 }
 .score {
   font-size: 2rem;
@@ -214,9 +250,10 @@ onUnmounted(() => {
 }
 
 button {
-  width: 200px;
+  width: 100%;
   padding: 10px;
   border: none;
   border-radius: 10px;
+  font-size: 2rem;
 }
 </style>
