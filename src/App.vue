@@ -6,7 +6,7 @@ import { useEventListener } from '@vueuse/core'
 
 const ready = ref(true)
 
-useEventListener(window, 'click', (e) => {
+useEventListener(document, 'click', (e) => {
   new AudioContext()
   ready.value = false
 })
