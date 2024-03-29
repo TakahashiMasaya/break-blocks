@@ -4,6 +4,11 @@ import {
   addEvent as addEventGamepad,
   removeEvent as removeEventGamepad
 } from './gamepad'
+import {
+  init as initTouch,
+  addEvent as addEventTouch,
+  removeEvent as removeEventTouch
+} from './touch'
 import { useInteractor } from '@/stores/interactor'
 
 export const initController = () => {
@@ -50,9 +55,31 @@ export const initController = () => {
     }
   })
   addEventGamepad()
+  initTouch({
+    leftOff: () => {
+      store.leftOff()
+    },
+    leftOn: () => {
+      store.leftOn()
+    },
+    rightOff: () => {
+      store.rightOff()
+    },
+    rightOn: () => {
+      store.rightOn()
+    },
+    spaceOn: () => {
+      store.spaceOn()
+    },
+    spaceOff: () => {
+      store.spaceOff()
+    }
+  })
+  addEventTouch()
 }
 
 export const removeController = () => {
   removeEvent()
   removeEventGamepad()
+  removeEventTouch()
 }
