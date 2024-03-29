@@ -40,9 +40,9 @@ export const removeEvent = () => {
 }
 
 const onTouchend = (e: TouchEvent) => {
+  command.leftOff()
+  command.rightOff()
   if (Math.abs(timeStamp - e.timeStamp) < 100) {
-    command.leftOff()
-    command.rightOff()
     command.spaceOn()
     timeStamp = e.timeStamp
   }
