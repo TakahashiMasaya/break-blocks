@@ -77,7 +77,7 @@ const increaseBallSpeed = () => {
  */
 const adoptiveBallSpeed = () => {
   // ボールスピードが2未満にならないよう調整する
-  const { x, y } = state.value.ball.speed
+  const { x, y } = state.value.ball.speed.getVec()
   state.value.ball.speed.setVec(
     Math.abs(x) <= 2 ? (x < 0 ? -2 : 2) : x,
     Math.abs(y) <= 2 ? (y < 0 ? -2 : 2) : y
@@ -96,14 +96,14 @@ export const bouncingBall = () => {
 
   // 壁に当たったら跳ね返る(横)
   if (x < 0 || x + width > state.value.frame.width) {
-    const { x: speedX, y: speedY } = state.value.ball.speed
+    const { x: speedX, y: speedY } = state.value.ball.speed.getVec()
     state.value.ball.speed.setVec(speedX * -1, speedY)
     state.value.collided = 'wall'
   }
 
   // 壁に当たったら跳ね返る(天井)
   if (y < 0) {
-    const { x: speedX, y: speedY } = state.value.ball.speed
+    const { x: speedX, y: speedY } = state.value.ball.speed.getVec()
     state.value.ball.speed.setVec(speedX, speedY * -1)
     state.value.collided = 'wall'
   }
@@ -191,10 +191,6 @@ export const bauseToRight = () => {
  */
 export const resetAll = () => {
   state.value = {
-    ...initialState,
-    spaceWalls: initialState.spaceWalls.map((o) => ({
-      ...o,
-      position: new Vec2(o.position.x, o.position.y)
-    }))
+    ...initialState()
   }
 }

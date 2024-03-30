@@ -146,7 +146,7 @@ onMounted(() => {
       case 'ready':
         if (storeInteractor.isSpaceOn) {
           store.toPlaying()
-          store.setBallSpeed({ x: 5 * (Math.random() > 0.5 ? 1 : -1), y: 5 })
+          store.setBallSpeed({ x: 5 * (Math.random() > 0.5 ? 1 : -1), y: -5 })
           break
         }
         // ボールも追随させる
