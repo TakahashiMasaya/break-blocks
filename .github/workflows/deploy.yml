@@ -39,6 +39,10 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: pnpm install
+      - name: test
+        run: pnpm test
+      - name: typecheck
+        run: pnpm typecheck
       - name: Build
         run: pnpm build
       - name: Setup Pages
