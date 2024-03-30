@@ -17,10 +17,6 @@ export const toGameclear = () => {
   state.value.status = 'gameclear'
 }
 
-export const resetSpaceWall = () => {
-  state.value.spaceWalls = [...initialSpaceWalls]
-}
-
 /**
  * スペースウォールが全て空であるかを返す
  *
