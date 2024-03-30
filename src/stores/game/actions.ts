@@ -1,5 +1,5 @@
 import { Vec2 } from '@/libs/vec2'
-import { initialSpaceWalls, initialState, state } from './state'
+import { initialState, state } from './state'
 
 export const toReady = () => {
   state.value.status = 'ready'
