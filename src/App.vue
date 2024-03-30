@@ -13,12 +13,6 @@ useEventListener(document, 'click', (e) => {
 </script>
 
 <template>
-  <div v-if="ready">
-    <GameTitle />
-  </div>
-  <div v-else>
-    <Game />
-  </div>
+  <GameTitle v-if="ready" />
+  <Game v-else />
 </template>
-
-<style scoped lang="scss"></style>
