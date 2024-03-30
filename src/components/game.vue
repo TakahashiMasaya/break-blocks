@@ -25,9 +25,9 @@
         :style="{
           transform: `translate(${wall.x}px, ${wall.y}px)`,
           width: `${wall.width}px`,
-          height: `${wall.height}px`,
-          display: wall.show ? 'block' : 'none'
+          height: `${wall.height}px`
         }"
+        :is-explode="!wall.show"
       />
       <ball
         :style="{
