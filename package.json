@@ -15,17 +15,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@vueuse/core": "^10.10.0",
+    "@vueuse/core": "^10.11.0",
     "@vueuse/sound": "^2.0.1",
     "pinia": "^2.1.7",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "vue": "^3.4.30",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.8",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
@@ -34,11 +34,11 @@
     "biome": "^0.3.3",
     "jsdom": "^24.1.0",
     "npm-run-all2": "^6.2.0",
-    "prettier": "^3.3.1",
-    "sass": "^1.77.4",
-    "typescript": "~5.4.5",
-    "vite": "^5.2.13",
+    "prettier": "^3.3.2",
+    "sass": "^1.77.6",
+    "typescript": "~5.5.2",
+    "vite": "^5.3.1",
     "vitest": "^1.6.0",
-    "vue-tsc": "^2.0.19"
+    "vue-tsc": "^2.0.22"
   }
 }
