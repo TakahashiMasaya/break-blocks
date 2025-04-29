@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //Mixin to add random position of each particle
 @mixin random-position($direction, $random_percentage) {
   @if $direction == top-left {
@@ -47,13 +49,13 @@
     @for $i from 0 through 50 {
       &:nth-child(#{$i}) {
         //Create random property values
-        scale: (random(20) * 0.1);
-        rotate: (random(360) + 80deg) * (random(3) - 2);
-        transform: skew((random(60) + 10) + deg);
-        filter: blur((random(3) * 0.5) + px);
+        scale: (math.random(20) * 0.1);
+        rotate: (math.random(360) + 80deg) * (math.random(3) - 2);
+        transform: skew((math.random(60) + 10) + deg);
+        filter: blur((math.random(3) * 0.5) + px);
 
         //Create random percentage for each child
-        $random_percentage: calc((random(300) + 100) / 100);
+        $random_percentage: calc((math.random(300) + 100) / 100);
 
         //Add the random position, by default the particles will go to the top-left side
         @include random-position(top-left, $random_percentage);
